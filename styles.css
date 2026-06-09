@@ -71,6 +71,15 @@
     padding: 0;
 }
 
+html, body {
+    scrollbar-width: none;  /* Firefox */
+    -ms-overflow-style: none;  /* IE and Edge */
+}
+
+html::-webkit-scrollbar, body::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera */
+}
+
 body {
     font-family: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
     background: radial-gradient(at top left, rgba(99, 102, 241, 0.05), transparent 450px), 
@@ -78,10 +87,8 @@ body {
                 var(--bg-app);
     background-attachment: fixed;
     color: var(--text-main);
-    height: 100vh;
-    padding: 1.25rem 1.5rem;
-    box-sizing: border-box;
-    overflow: hidden; /* Prevent body level scrollbars */
+    min-height: 100vh;
+    padding: 2.5rem 1.5rem;
     transition: background-color 0.3s ease, color 0.3s ease;
     line-height: 1.5;
 }
@@ -89,11 +96,9 @@ body {
 .app-container {
     max-width: 1440px;
     margin: 0 auto;
-    height: 100%;
     display: flex;
     flex-direction: column;
-    gap: 1rem;
-    overflow: hidden; /* Let container fit the screen without overflow */
+    gap: 1.5rem;
     
     /* Variables driven by edit-mode-active class */
     --grip-width: 0px;
@@ -465,11 +470,7 @@ body {
     display: flex;
     flex-direction: column;
     gap: 0.75rem;
-    flex: 1;
-    overflow-y: auto;
     overflow-x: hidden;
-    min-height: 0;
-    padding-right: 4px;
 }
 
 /* Grid Column Defs - Resolves column overlap bugs and wraps */
@@ -482,16 +483,11 @@ body {
 }
 
 .table-header-grid {
-    position: sticky;
-    top: 0;
-    z-index: 5;
-    background: var(--bg-app);
-    padding: 0.75rem 1.5rem;
+    padding: 0.75rem 2.25rem;
     color: var(--text-muted);
     font-size: 0.7rem;
     font-weight: 800;
     letter-spacing: 1.5px;
-    margin-bottom: 0.25rem;
 }
 
 /* Row Card Style */
@@ -502,7 +498,7 @@ body {
 }
 
 .row-card {
-    padding: 1rem 1.5rem;
+    padding: 1.4rem 2.25rem;
     background-color: var(--bg-card);
     border: 1px solid var(--border-card);
     border-radius: 20px;
