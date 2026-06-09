@@ -78,8 +78,10 @@ body {
                 var(--bg-app);
     background-attachment: fixed;
     color: var(--text-main);
-    min-height: 100vh;
-    padding: 2.5rem 1.5rem;
+    height: 100vh;
+    padding: 1.25rem 1.5rem;
+    box-sizing: border-box;
+    overflow: hidden; /* Prevent body level scrollbars */
     transition: background-color 0.3s ease, color 0.3s ease;
     line-height: 1.5;
 }
@@ -87,9 +89,11 @@ body {
 .app-container {
     max-width: 1440px;
     margin: 0 auto;
+    height: 100%;
     display: flex;
     flex-direction: column;
-    gap: 1.5rem;
+    gap: 1rem;
+    overflow: hidden; /* Let container fit the screen without overflow */
     
     /* Variables driven by edit-mode-active class */
     --grip-width: 0px;
@@ -461,24 +465,33 @@ body {
     display: flex;
     flex-direction: column;
     gap: 0.75rem;
-    overflow-x: auto;
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
+    min-height: 0;
+    padding-right: 4px;
 }
 
 /* Grid Column Defs - Resolves column overlap bugs and wraps */
 .table-header-grid, .row-card {
     display: grid;
-    grid-template-columns: var(--grip-width, 0px) minmax(230px, 1.8fr) minmax(190px, 1.6fr) minmax(155px, 1.25fr) minmax(190px, 1.6fr) minmax(155px, 1.25fr) var(--actions-width, 0px);
+    grid-template-columns: var(--grip-width, 0px) minmax(150px, 1.5fr) minmax(110px, 1.2fr) minmax(130px, 1.1fr) minmax(110px, 1.2fr) minmax(130px, 1.1fr) var(--actions-width, 0px);
     align-items: center;
-    gap: 1.5rem;
+    gap: 1rem;
     transition: grid-template-columns 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .table-header-grid {
-    padding: 0.75rem 2.25rem;
+    position: sticky;
+    top: 0;
+    z-index: 5;
+    background: var(--bg-app);
+    padding: 0.75rem 1.5rem;
     color: var(--text-muted);
     font-size: 0.7rem;
     font-weight: 800;
     letter-spacing: 1.5px;
+    margin-bottom: 0.25rem;
 }
 
 /* Row Card Style */
@@ -489,7 +502,7 @@ body {
 }
 
 .row-card {
-    padding: 1.4rem 2.25rem;
+    padding: 1rem 1.5rem;
     background-color: var(--bg-card);
     border: 1px solid var(--border-card);
     border-radius: 20px;
@@ -650,18 +663,18 @@ body {
     -webkit-appearance: none;
     background: var(--btn-sec-bg);
     border-radius: 30px;
-    padding: 0.55rem 1.15rem;
+    padding: 0.5rem 0.85rem;
     font-family: inherit;
     font-size: 0.75rem;
     font-weight: 700;
     display: inline-flex;
     align-items: center;
-    gap: 0.6rem;
+    gap: 0.5rem;
     cursor: pointer;
     transition: all 0.2s ease;
     user-select: none;
     width: 100%;
-    min-width: 145px;
+    min-width: 125px;
     justify-content: flex-start;
 }
 
