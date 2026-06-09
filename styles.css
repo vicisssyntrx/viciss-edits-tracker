@@ -1219,6 +1219,7 @@ body {
 }
 
 /* --- Responsive Adjustments --- */
+/* --- Responsive Adjustments --- */
 @media (max-width: 1024px) {
     .main-header {
         padding: 1.25rem 1.5rem;
@@ -1242,10 +1243,16 @@ body {
         display: flex;
         align-items: center;
         justify-content: space-between;
+        padding: 0.5rem 0;
+        border-bottom: 1px solid var(--border-divider);
+    }
+
+    .row-card > div:last-child {
+        border-bottom: none;
     }
 
     .row-card > div::before {
-        content: attr(class);
+        content: attr(data-label);
         font-size: 0.65rem;
         font-weight: 800;
         color: var(--text-muted);
@@ -1264,9 +1271,191 @@ body {
         display: none !important;
     }
 
+    .col-time-frame {
+        gap: 0.5rem;
+    }
+    
+    .date-text-container {
+        text-align: right;
+    }
+
+    .col-versions {
+        justify-content: flex-end;
+        max-width: 60%;
+        flex-wrap: wrap;
+    }
+
+    .col-status {
+        justify-content: flex-end;
+    }
+
+    .status-dropdown-pills {
+        width: 100%;
+        display: flex;
+        justify-content: flex-end;
+    }
+
+    .status-pill-trigger {
+        min-width: 130px;
+    }
+
+    .status-dropdown-menu {
+        right: 0;
+        left: auto; /* Prevent menu clipping */
+    }
+
     .col-actions {
+        justify-content: flex-end;
+    }
+}
+
+@media (max-width: 600px) {
+    body {
+        padding: 1rem 0.75rem; /* Margins to prevent any clipping */
+    }
+
+    .app-container {
+        gap: 1rem;
+    }
+
+    /* Header mobile layout */
+    .main-header {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 1rem;
+        padding: 1rem;
+        border-radius: 16px;
+    }
+
+    .header-left {
+        width: 100%;
         justify-content: flex-start;
-        border-top: 1px solid var(--border-divider);
-        padding-top: 0.5rem;
+        gap: 0.75rem;
+    }
+
+    .main-title {
+        font-size: 1.35rem;
+    }
+
+    .logo-img {
+        width: 40px;
+        height: 40px;
+    }
+
+    .sub-title {
+        font-size: 0.55rem;
+        letter-spacing: 1px;
+    }
+
+    .header-right {
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        align-items: center;
+        gap: 0.75rem;
+    }
+
+    .status-indicator-badge {
+        order: 1;
+        padding: 0.35rem 0.65rem;
+        font-size: 0.7rem;
+    }
+
+    .header-actions {
+        order: 2;
+        margin-left: auto;
+        gap: 0.5rem;
+    }
+
+    /* Convert header buttons to icon-only on mobile */
+    .header-actions .btn span {
+        display: none;
+    }
+
+    .header-actions .btn {
+        padding: 0.55rem;
+        width: 38px;
+        height: 38px;
+        border-radius: 10px;
+    }
+
+    .progress-card {
+        width: 100%;
+        min-width: 100%;
+        order: 3;
+        margin-top: 0.25rem;
+    }
+
+    /* Project Bar mobile layout */
+    .project-bar-card {
+        padding: 0.85rem 1rem;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0.75rem;
+        border-radius: 16px;
+    }
+
+    .project-selector-group {
+        width: 100%;
+        justify-content: space-between;
+        gap: 0.5rem;
+    }
+
+    .custom-select-wrapper {
+        flex-grow: 1;
+    }
+
+    .select-input {
+        width: 100%;
+        padding: 0.45rem 1.75rem 0.45rem 0.75rem;
+        font-size: 0.8rem;
+    }
+
+    /* Convert project actions to icon-only on mobile */
+    .project-selector-group .btn span {
+        display: none;
+    }
+
+    .project-selector-group .btn {
+        padding: 0.45rem;
+        width: 34px;
+        height: 34px;
+        flex-shrink: 0;
+    }
+
+    .edit-status-banner {
+        width: 100%;
+        text-align: center;
+        justify-content: center;
+    }
+
+    /* Row Card padding and spacing */
+    .row-card {
+        padding: 1rem;
+        border-radius: 16px;
+    }
+
+    /* Footer Legend mobile layout */
+    .board-footer-legend {
+        padding: 1rem;
+        flex-direction: column;
+        align-items: center;
+        gap: 1rem;
+        border-radius: 16px;
+    }
+
+    .legend-left {
+        justify-content: center;
+        width: 100%;
+        flex-wrap: wrap;
+        gap: 1rem;
+    }
+
+    .legend-right {
+        justify-content: center;
+        width: 100%;
+        flex-wrap: wrap;
+        gap: 0.5rem;
     }
 }

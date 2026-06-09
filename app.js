@@ -153,8 +153,25 @@ window.addEventListener('DOMContentLoaded', async () => {
 
 // --- Theme Manager ---
 function initTheme() {
-    const savedTheme = localStorage.getItem('theme') || 'light';
-    setTheme(savedTheme);
+    // Check URL query parameters first (e.g. ?theme=dark)
+    const params = new URLSearchParams(window.location.search);
+    const queryTheme = params.get('theme');
+    
+    if (queryTheme === 'dark' || queryTheme === 'light') {
+        setTheme(queryTheme);
+    } else {
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        setTheme(savedTheme);
+    }
+    
+    // Listen for theme change messages from Viciss AIOS
+    window.addEventListener('message', (event) => {
+        if (event.data && event.data.type === 'viciss-theme-change') {
+            if (event.data.theme === 'dark' || event.data.theme === 'light') {
+                setTheme(event.data.theme);
+            }
+        }
+    });
 }
 
 function setTheme(theme) {
@@ -622,7 +639,7 @@ function renderSchedule() {
         // Col 2: Date window
         const noteHtml = entry.note ? `<span class="date-note">(${entry.note})</span>` : '';
         const colDate = `
-            <div class="col-time-frame">
+            <div class="col-time-frame" data-label="Time Frame">
                 <div class="calendar-icon-container">
                     <svg class="calendar-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
@@ -644,7 +661,7 @@ function renderSchedule() {
         } else {
             englishChips = entry.english_versions.map(v => `<span class="version-chip chip-english">${v}</span>`).join('');
         }
-        const colEnVersions = `<div class="col-versions font-english-color">${englishChips}</div>`;
+        const colEnVersions = `<div class="col-versions font-english-color" data-label="English Versions">${englishChips}</div>`;
         
         // Col 4: English Status Dropdown
         const enStatusHtml = createStatusDropdownHtml(entry.id, 'english', entry.english_status);
@@ -656,14 +673,14 @@ function renderSchedule() {
         } else {
             hindiChips = entry.hindi_versions.map(v => `<span class="version-chip chip-hindi">${v}</span>`).join('');
         }
-        const colHiVersions = `<div class="col-versions font-hindi-color">${hindiChips}</div>`;
+        const colHiVersions = `<div class="col-versions font-hindi-color" data-label="Hindi Versions">${hindiChips}</div>`;
         
         // Col 6: Hindi Status Dropdown
         const hiStatusHtml = createStatusDropdownHtml(entry.id, 'hindi', entry.hindi_status);
         
         // Col 7: Actions (Edit / Delete)
         const colActions = `
-            <div class="col-actions">
+            <div class="col-actions" data-label="Actions">
                 <button class="btn-action" onclick="openEditEntryModal('${entry.id}')" title="Edit row">
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
                 </button>
@@ -683,9 +700,10 @@ function renderSchedule() {
 function createStatusDropdownHtml(entryId, type, statusValue) {
     const formattedStatus = (statusValue || 'not-started').toUpperCase().replace('-', ' ');
     const lockedClass = state.isViewOnly ? 'locked' : '';
+    const labelText = type === 'english' ? 'English Status' : 'Hindi Status';
     
     return `
-        <div class="col-status">
+        <div class="col-status" data-label="${labelText}">
             <div class="status-dropdown-pills">
                 <button class="status-pill-trigger ${statusValue} ${lockedClass}" 
                         id="status-trigger-${entryId}-${type}" 
